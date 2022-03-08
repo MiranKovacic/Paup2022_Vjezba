@@ -166,6 +166,7 @@
     <Content Include="Views\mojprvi\Index.cshtml" />
     <Content Include="Views\mojprvi\Druga.cshtml" />
     <Content Include="Views\mojprvi\Treca.cshtml" />
+    <Content Include="Views\mojprvi\Student.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

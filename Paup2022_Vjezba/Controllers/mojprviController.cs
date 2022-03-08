@@ -28,5 +28,13 @@ namespace Paup2022_Vjezba.Controllers
             ViewBag.Broj = broj;
             return View();
         }
+
+        public ActionResult Student()
+        {
+            ViewBag.Ime = "Sanja";
+            ViewBag.Prezime = "Perić";
+            ViewBag.GodinaRodjenja = "1991";
+            return View();
+        }
     }
 }
