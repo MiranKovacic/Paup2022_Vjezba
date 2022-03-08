@@ -36,5 +36,10 @@ namespace Paup2022_Vjezba.Controllers
             ViewBag.GodinaRodjenja = "1991";
             return View();
         }
+
+        public string VratiVrijeme()
+        {
+            return DateTime.Now.ToString();
+        }
     }
 }
