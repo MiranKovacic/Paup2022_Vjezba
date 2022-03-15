@@ -1,0 +1,29 @@
+﻿@using Paup2022_Vjezba.Models
+@model StudentiDB
+@{
+    ViewBag.Title = "Popis Studenata";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Popis</h2>
+
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Ime</th>
+        <th>Prezime</th>
+        <th>Oib</th>
+        <th>Detalji</th>
+    </tr>
+    @foreach (var student in Model.VratiListu())
+    {
+        <tr>
+            <td>@student.ID</td>
+            <td>@student.Ime</td>
+            <td>@student.Prezime</td>
+            <td>@student.OIB</td>
+            <td>@Html.ActionLink("Info", "Detalji", new { id = student.ID})</td>
+        </tr>
+    }
+</table>
+
