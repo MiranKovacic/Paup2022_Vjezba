@@ -19,7 +19,7 @@ namespace Paup2022_Vjezba.Models
                 Spol = 'M',
                 DatumRodjenja = new DateTime(1991, 02, 01),
                 OIB = "12345678901",
-                RedobvanStudent = true
+                RedovniStudent = true
             });
             lista.Add(new Student()
             {
@@ -29,7 +29,7 @@ namespace Paup2022_Vjezba.Models
                 Spol = 'M',
                 DatumRodjenja = new DateTime(1958, 2, 15),
                 OIB = "10987654321",
-                RedobvanStudent = false
+                RedovniStudent = false
             });
             lista.Add(new Student()
             {
@@ -39,7 +39,7 @@ namespace Paup2022_Vjezba.Models
                 Spol = 'Ž',
                 DatumRodjenja = new DateTime(1987, 11, 12),
                 OIB = "13579086422",
-                RedobvanStudent = true
+                RedovniStudent = true
             });
             lista.Add(new Student()
             {
@@ -49,7 +49,7 @@ namespace Paup2022_Vjezba.Models
                 Spol = 'Ž',
                 DatumRodjenja = new DateTime(1990, 04, 26),
                 OIB = "10293847564",
-                RedobvanStudent = true
+                RedovniStudent = true
             });
         }
 

@@ -14,6 +14,6 @@ namespace Paup2022_Vjezba.Models
         public string OIB { get; set; }
         public DateTime DatumRodjenja { get; set; }
         public int GodinaStudija { get; set; }
-        public bool RedobvanStudent { get; set; }
+        public bool RedovniStudent { get; set; }
     }
 }

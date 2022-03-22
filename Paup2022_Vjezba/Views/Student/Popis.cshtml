@@ -13,6 +13,7 @@
         <th>Ime</th>
         <th>Prezime</th>
         <th>Oib</th>
+        <th>Redovan</th>
         <th>Detalji</th>
     </tr>
     @foreach (var student in Model.VratiListu())
@@ -22,7 +23,8 @@
             <td>@student.Ime</td>
             <td>@student.Prezime</td>
             <td>@student.OIB</td>
-            <td>@Html.ActionLink("Info", "Detalji", new { id = student.ID})</td>
+            <td>@Html.CheckBox("chbRedovan", student.RedovniStudent, new { @class = "name", @readonly = "readonly" })</td>
+            <td>@Html.ActionLink("Info", "Detalji", new { id = student.ID })</td>
         </tr>
     }
 </table>
