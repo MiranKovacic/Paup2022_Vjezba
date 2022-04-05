@@ -126,6 +126,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\GodinaStudiranja.cs" />
     <Compile Include="Models\Student.cs" />
     <Compile Include="Models\StudentiDB.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -173,6 +174,7 @@
     <Content Include="Views\Student\Index.cshtml" />
     <Content Include="Views\Student\Popis.cshtml" />
     <Content Include="Views\Student\Detalji.cshtml" />
+    <Content Include="Views\Student\Azuriraj.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

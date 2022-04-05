@@ -25,6 +25,7 @@
             <td>@student.OIB</td>
             <td>@Html.CheckBox("chbRedovan", student.RedovniStudent, new { @class = "name", @readonly = "readonly" })</td>
             <td>@Html.ActionLink("Info", "Detalji", new { id = student.ID })</td>
+            <td>@Html.ActionLink("Ažuriraj", "Azuriraj", new { id = student.ID })</td>
         </tr>
     }
 </table>
