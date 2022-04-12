@@ -12,81 +12,90 @@
 {
     @Html.AntiForgeryToken()
 
-    <table>
-        <tr>
-            <td>
-                @Html.LabelFor(model => model.ID)
-            </td>
-            <td>
-                @Html.TextBoxFor(model => model.ID, new { disabled = true })
-            </td>
-        </tr>
-        <tr>
-            <td>
-                @Html.LabelFor(model => model.Ime)
-            </td>
-            <td>
-                @Html.TextBoxFor(model => model.Ime)
-                @Html.ValidationMessageFor(model => model.Ime)
-            </td>
-        </tr>
-        <tr>
-            <td>
-                @Html.LabelFor(model => model.Prezime)
-            </td>
-            <td>
-                @Html.TextBoxFor(model => model.Prezime)
-                @Html.ValidationMessageFor(model => model.Prezime)
-            </td>
-        </tr>
-        <tr>
-            <td>
-                @Html.LabelFor(model => model.Spol)
-            </td>
-            <td>
-                @Html.RadioButtonFor(model => model.Spol, 'M') Muški
-                @Html.RadioButtonFor(model => model.Spol, 'Z') Ženski
-                @Html.ValidationMessageFor(model => model.Spol)
-            </td>
-        </tr>
-        <tr>
-            <td>
-                @Html.LabelFor(model => model.DatumRodjenja)
-            </td>
-            <td>
-                @Html.EditorFor(model => model.DatumRodjenja)
-                @Html.ValidationMessageFor(model => model.DatumRodjenja)
-            </td>
-        </tr>
-        <tr>
-            <td>
-                @Html.LabelFor(model => model.OIB)
-            </td>
-            <td>
-                @Html.TextBoxFor(model => model.OIB)
-                @Html.ValidationMessageFor(model => model.OIB)
-            </td>
-        </tr>
-        <tr>
-            <td>
-                @Html.LabelFor(model => model.GodinaStudija)
-            </td>
-            <td>
-                @Html.EnumDropDownListFor(model => model.GodinaStudija)
-                @Html.ValidationMessageFor(model => model.GodinaStudija)
-            </td>
-        </tr>
-        <tr>
-            <td>
-                @Html.LabelFor(model => model.RedovniStudent)
-            </td>
-            <td>
-                @Html.CheckBoxFor(model => model.RedovniStudent)
-                @Html.ValidationMessageFor(model => model.RedovniStudent)
-            </td>
-        </tr>
-    </table>
-    @Html.ValidationSummary(true, "Spremanje nije uspjelo!");
+<table>
+    <tr>
+        <td>
+            @Html.LabelFor(model => model.ID)
+        </td>
+        <td>
+            @Html.TextBoxFor(model => model.ID, new { disabled = true })
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @Html.LabelFor(model => model.Ime)
+        </td>
+        <td>
+            @Html.TextBoxFor(model => model.Ime)
+            @Html.ValidationMessageFor(model => model.Ime)
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @Html.LabelFor(model => model.Prezime)
+        </td>
+        <td>
+            @Html.TextBoxFor(model => model.Prezime)
+            @Html.ValidationMessageFor(model => model.Prezime)
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @Html.LabelFor(model => model.Spol)
+        </td>
+        <td>
+            @Html.RadioButtonFor(model => model.Spol, "M") Muški
+            @Html.RadioButtonFor(model => model.Spol, "Z") Ženski
+            @Html.ValidationMessageFor(model => model.Spol)
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @Html.LabelFor(model => model.DatumRodjenja)
+        </td>
+        <td>
+            @Html.EditorFor(model => model.DatumRodjenja)
+            @Html.ValidationMessageFor(model => model.DatumRodjenja)
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @Html.LabelFor(model => model.OIB)
+        </td>
+        <td>
+            @Html.TextBoxFor(model => model.OIB)
+            @Html.ValidationMessageFor(model => model.OIB)
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @Html.LabelFor(model => model.BrojUpisanihKolegija)
+        </td>
+        <td>
+            @Html.TextBoxFor(model => model.BrojUpisanihKolegija)
+            @Html.ValidationMessageFor(model => model.BrojUpisanihKolegija)
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @Html.LabelFor(model => model.GodinaStudija)
+        </td>
+        <td>
+            @Html.EnumDropDownListFor(model => model.GodinaStudija)
+            @Html.ValidationMessageFor(model => model.GodinaStudija)
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @Html.LabelFor(model => model.RedovniStudent)
+        </td>
+        <td>
+            @Html.CheckBoxFor(model => model.RedovniStudent)
+            @Html.ValidationMessageFor(model => model.RedovniStudent)
+        </td>
+    </tr>
+</table>
+    @Html.ValidationSummary(false, "Spremanje nije uspjelo!");
     <p><input type="submit" value="Spremi" /></p>
     @Html.ActionLink("Povratak bez spremanja", "Popis", "Student")
 

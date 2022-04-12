@@ -10,6 +10,7 @@ namespace Paup2022_Vjezba.Controllers
 {
     public class StudentController : Controller
     {
+        BazaDbContext bazaPOdataka = new BazaDbContext();
         // GET: Student
         public ActionResult Index()
         {
@@ -20,8 +21,8 @@ namespace Paup2022_Vjezba.Controllers
 
         public ActionResult Popis()
         {
-            StudentiDB studentDB = new StudentiDB();
-            return View(studentDB);
+            var studenti = bazaPOdataka.PopisStudenata.ToList();
+            return View(studenti);
         }
 
         public ActionResult Detalji(int? id)
@@ -29,10 +30,7 @@ namespace Paup2022_Vjezba.Controllers
             if (!id.HasValue)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            StudentiDB studentDB = new StudentiDB();
-
-            Student student = studentDB.VratiListu()
-                .FirstOrDefault(x => x.ID == id);
+            Student student = bazaPOdataka.PopisStudenata.FirstOrDefault(x => x.ID == id);
 
             if (student == null)
             {
@@ -46,9 +44,7 @@ namespace Paup2022_Vjezba.Controllers
             if (!id.HasValue)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            StudentiDB studentDB = new StudentiDB();
-
-            Student student = studentDB.VratiListu()
+            Student student = bazaPOdataka.PopisStudenata
                 .FirstOrDefault(s => s.ID == id);
 
             if (student == null)
@@ -65,9 +61,8 @@ namespace Paup2022_Vjezba.Controllers
         {
             if (ModelState.IsValid)
             {
-                //Ažuriranje liste podataka
-                StudentiDB studentidb = new StudentiDB();
-                studentidb.AzurirajStudenta(s);
+                bazaPOdataka.Entry(s).State = System.Data.Entity.EntityState.Modified;
+                bazaPOdataka.SaveChanges();
                 return RedirectToAction("Popis");
             }
             return View(s);
