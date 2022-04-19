@@ -6,12 +6,18 @@
 
 <h2>@ViewBag.Title</h2>
 
-Jeste li sigurni da želite obrisati studenta @Model.PrezimeIme (OIB: @Model.OIB)?
+<strong>Jeste li sigurni da želite obrisati studenta @Model.PrezimeIme (OIB: @Model.OIB)?</strong>
 
+<br />
+<br />
 @using (Html.BeginForm("Brisi", "Student"))
 {
     @Html.AntiForgeryToken();
-    <input type="submit" value="Izbriši" />
+    <button type="submit" class="btn btn-danger">
+        <span class="glyphicon glyphicon-ok" aria-hidden="false">
+        </span>
+        Izbriši
+    </button>
 
     <br />
     <br />

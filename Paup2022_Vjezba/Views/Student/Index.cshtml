@@ -1,14 +1,26 @@
 ﻿
 @{
-    //ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Početna stranica";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>PAUP viježba 3</h2>
-
-Aplikacija o studentima
-<br />
-Fakultet: @ViewBag.Fakultet
-<br />
-<br />
-Popis Studenanta @Html.ActionLink("link", "Popis")
+<div class="jumbotron">
+    <h1>Međimursko veleučilište</h1>
+    <p class="lead">Baza studenata</p>
+</div>
+ <div class="row">
+     <div class="col-md-6">
+         <h2>Pretaživanje i pregled</h2>
+         <p>
+             Pretraživanje studenata po imenu i prezimenu, uptravljanje studentima
+         </p>
+         <p>@Html.ActionLink("Pregled", "Popis", "Student", null, new { @class = "btn btn-default" })</p>
+     </div>
+     <div class="col-md-6">
+         <h2>Unos novog studenta</h2>
+         <p>
+             Unos podataka o novom sutdentu u bazu studenata
+         </p>
+         <p>@Html.ActionLink("Unos", "Azuriraj", "Student", null, new { @class = "btn btn-default" })</p>
+     </div>
+ </div>
