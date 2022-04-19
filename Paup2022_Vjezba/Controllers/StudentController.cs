@@ -19,9 +19,14 @@ namespace Paup2022_Vjezba.Controllers
             return View();
         }
 
-        public ActionResult Popis()
+        public ActionResult Popis(string naziv, string spol)
         {
             var studenti = bazaPOdataka.PopisStudenata.ToList();
+
+            if (!String.IsNullOrWhiteSpace(naziv))
+                studenti = studenti.Where(x => x.PrezimeIme.ToUpper().Contains(naziv.ToUpper())).ToList();
+            if (!String.IsNullOrWhiteSpace(spol))
+                studenti = studenti.Where(x => x.Spol == spol).ToList();
             return View(studenti);
         }
 
@@ -41,15 +46,26 @@ namespace Paup2022_Vjezba.Controllers
 
         public ActionResult Azuriraj(int? id)
         {
+            Student student = null;
             if (!id.HasValue)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-
-            Student student = bazaPOdataka.PopisStudenata
-                .FirstOrDefault(s => s.ID == id);
-
-            if (student == null)
             {
-                return HttpNotFound();
+                student = new Student();
+                ViewBag.Title = "Kreiranje studenta";
+                ViewBag.Novi = true;
+                //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            else
+            {
+                student = bazaPOdataka.PopisStudenata
+                    .FirstOrDefault(s => s.ID == id);
+
+                if (student == null)
+                {
+                    return HttpNotFound();
+                }
+
+                ViewBag.Title = "Ažuriranje postojećeg studenta";
+                ViewBag.Novi = false;
             }
             return View(student);
         }
@@ -61,11 +77,49 @@ namespace Paup2022_Vjezba.Controllers
         {
             if (ModelState.IsValid)
             {
-                bazaPOdataka.Entry(s).State = System.Data.Entity.EntityState.Modified;
+                if (s.ID != 0)
+                    bazaPOdataka.Entry(s).State = System.Data.Entity.EntityState.Modified;
+                else
+                    bazaPOdataka.PopisStudenata.Add(s);
                 bazaPOdataka.SaveChanges();
                 return RedirectToAction("Popis");
             }
+
+            if(s.ID!=0)
+            {
+                ViewBag.Title = "Ažuriranje studenta";
+                ViewBag.Novi = false;
+            }
+            else
+            {
+                ViewBag.Title = "Kreiranje novog studenta";
+                ViewBag.Novi = true;
+            }
             return View(s);
+        }
+
+        public ActionResult Brisi(int? id)
+        {
+            if (id == null)
+                return RedirectToAction("Popis");
+            Student s = bazaPOdataka.PopisStudenata.FirstOrDefault(x => x.ID == id);
+            if (s == null)
+                return HttpNotFound();
+            ViewBag.Title = "Potvrda brisanja studenta";
+            return View(s);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Brisi(int id)
+        {
+            Student s = bazaPOdataka.PopisStudenata
+                .FirstOrDefault(x => x.ID == id);
+            if (s == null)
+                return HttpNotFound();
+            bazaPOdataka.PopisStudenata.Remove(s);
+            bazaPOdataka.SaveChanges();
+            return View("BrisiStatus");
         }
     }
 }

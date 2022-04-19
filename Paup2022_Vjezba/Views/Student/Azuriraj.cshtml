@@ -1,18 +1,26 @@
 ﻿@using Paup2022_Vjezba.Models
 @model Student
 @{
-    ViewBag.Title = "Ažuriranje: " + Model.Ime + " " + Model.Prezime;
     Layout = "~/Views/Shared/_Layout.cshtml";
+
 }
-
-<h2>Ažuriranje podataka o studentu</h2>
-<h3>@Model.Ime @Model.Prezime</h3>
-
+@{ if (ViewBag.Novi)
+    {
+        <h2>Kreiranje novog studenta</h2>
+    }
+    else
+    {
+        <h2>Ažuriranje podataka o studentu</h2>
+        <h3>@Model.Ime @Model.Prezime</h3>
+    }
+}
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
 <table>
+    @if (!ViewBag.Novi)
+        {
     <tr>
         <td>
             @Html.LabelFor(model => model.ID)
@@ -21,6 +29,7 @@
             @Html.TextBoxFor(model => model.ID, new { disabled = true })
         </td>
     </tr>
+            }
     <tr>
         <td>
             @Html.LabelFor(model => model.Ime)

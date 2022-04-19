@@ -17,6 +17,15 @@ namespace Paup2022_Vjezba.Models
         public string Ime { get; set; }
         [Display(Name = "Prezime")]
         public string Prezime { get; set; }
+
+        public string PrezimeIme
+        {
+            get
+            {
+                return Prezime + " " + Ime;
+            }
+        }
+
         [Display(Name = "Spol")]
         public string Spol { get; set; }
         [Display(Name = "OIB")]
