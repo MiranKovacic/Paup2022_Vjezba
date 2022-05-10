@@ -19,14 +19,17 @@ namespace Paup2022_Vjezba.Controllers
             return View();
         }
 
-        public ActionResult Popis(string naziv, string spol)
+        public ActionResult Popis(string naziv, string spol, string smjer)
         {
             var studenti = bazaPOdataka.PopisStudenata.ToList();
-
+            var smjeroviList = bazaPOdataka.PopisSmjerova.OrderBy(x => x.Naziv).ToList();
+            ViewBag.Smjerovi = smjeroviList;
             if (!String.IsNullOrWhiteSpace(naziv))
                 studenti = studenti.Where(x => x.PrezimeIme.ToUpper().Contains(naziv.ToUpper())).ToList();
             if (!String.IsNullOrWhiteSpace(spol))
                 studenti = studenti.Where(x => x.Spol == spol).ToList();
+            if (!String.IsNullOrWhiteSpace(smjer))
+                studenti = studenti.Where(x => x.SifraSmjera == smjer).ToList();
             return View(studenti);
         }
 
@@ -67,6 +70,11 @@ namespace Paup2022_Vjezba.Controllers
                 ViewBag.Title = "Ažuriranje postojećeg studenta";
                 ViewBag.Novi = false;
             }
+
+            var smjerovi = bazaPOdataka.PopisSmjerova.OrderBy(x => x.Naziv).ToList();
+            smjerovi.Insert(0, new Smjer { Sifra = "", Naziv = "Nedefinirano" });
+            ViewBag.Smjerovi = smjerovi;
+
             return View(student);
         }
 

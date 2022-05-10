@@ -11,5 +11,6 @@ namespace Paup2022_Vjezba.Models
     public class BazaDbContext: DbContext
     {
         public DbSet<Student> PopisStudenata { get; set; }
+        public DbSet<Smjer> PopisSmjerova { get; set; }
     }
 }
