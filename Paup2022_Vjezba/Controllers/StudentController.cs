@@ -1,4 +1,5 @@
-﻿using Paup2022_Vjezba.Models;
+﻿using PagedList;
+using Paup2022_Vjezba.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,16 +22,48 @@ namespace Paup2022_Vjezba.Controllers
 
         public ActionResult Popis(string naziv, string spol, string smjer)
         {
-            var studenti = bazaPOdataka.PopisStudenata.ToList();
             var smjeroviList = bazaPOdataka.PopisSmjerova.OrderBy(x => x.Naziv).ToList();
             ViewBag.Smjerovi = smjeroviList;
+            return View();
+        }
+
+        public ActionResult PopisPartial(string naziv, string spol, string sort, string smjer, int? page)
+        {
+            ViewBag.Sortiranje = sort;
+            ViewBag.NavizSort = String.IsNullOrEmpty(sort) ? "naziv_desc" : "";
+            ViewBag.SmjerSort = sort == "smjer" ? "smjer_desc" : "smjer";
+            ViewBag.Smjer = smjer;
+            ViewBag.Naziv = naziv;
+            ViewBag.Spol = spol;
+
+            var studenti = bazaPOdataka.PopisStudenata.ToList();
+            var smjeroviList = bazaPOdataka.PopisSmjerova.OrderBy(x => x.Naziv).ToList();
+            //ViewBag.Smjerovi = smjeroviList;
             if (!String.IsNullOrWhiteSpace(naziv))
                 studenti = studenti.Where(x => x.PrezimeIme.ToUpper().Contains(naziv.ToUpper())).ToList();
             if (!String.IsNullOrWhiteSpace(spol))
                 studenti = studenti.Where(x => x.Spol == spol).ToList();
             if (!String.IsNullOrWhiteSpace(smjer))
                 studenti = studenti.Where(x => x.SifraSmjera == smjer).ToList();
-            return View(studenti);
+
+            switch (sort)
+            {
+                case "naziv_desc":
+                    studenti = studenti.OrderByDescending(s => s.PrezimeIme).ToList();
+                    break;
+                case "smjer":
+                    studenti = studenti.OrderBy(s => s.SifraSmjera).ToList();
+                    break;
+                case "smejr_desc":
+                    studenti = studenti.OrderByDescending(s => s.SifraSmjera).ToList();
+                    break;
+                default:
+                    studenti = studenti.OrderBy(s => s.PrezimeIme).ToList();
+                    break;
+            }
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            return PartialView("_PartialPopis", studenti.ToPagedList(pageNumber, pageSize));
         }
 
         public ActionResult Detalji(int? id)
