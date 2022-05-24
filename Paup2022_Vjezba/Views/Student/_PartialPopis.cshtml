@@ -1,4 +1,5 @@
 ﻿@using Paup2022_Vjezba.Models;
+@using Paup2022_Vjezba.Misc
 @using PagedList.Mvc;
 @model PagedList.IPagedList<Student>
     @{
@@ -27,8 +28,12 @@
                    new { smjer = ViewBag.Smjer, naziv = ViewBag.Naziv, spol = ViewBag.Spol, sort = ViewBag.NazivSort }, ajaxOpt)
                 </th>
                 <th>Redovan</th>
-                <th>Akcije</th>
-            </tr>
+
+                @if (User.Identity.IsAuthenticated && ((User as LogiraniKorisnik).IsInRole(OvlastiKorisnik.Administrator) || (User as LogiraniKorisnik).IsInRole(OvlastiKorisnik.Moderator)))
+                {
+                    <th>Akcije</th>
+                }
+                </tr>
         </thread>
         <tbody>
             @if (Model.Any())
@@ -42,12 +47,16 @@
                 <td>@student.OIB</td>
                 <td>@(student.UpisaniSmjer?.Naziv)</td>
                 <td>@Html.CheckBox("chbRedovan", student.RedovniStudent, new { @disabled = true })</td>
-                <td>
-                    @Html.ActionLink("Info", "Detalji", new { id = student.ID }, new { @class = "btn btn-info btn-sm" })
-                @Html.ActionLink("Ažuriraj", "Azuriraj", new { id = student.ID }, new { @class = "btn btn-warning btn-sm" })
-                @Html.ActionLink("Izbriši", "Brisi", new { id = student.ID }, new { @class = "btn btn-danger btn-sm" })
-            </td>
-            </tr>
+
+                @if (User.Identity.IsAuthenticated && ((User as LogiraniKorisnik).IsInRole(OvlastiKorisnik.Administrator) || (User as LogiraniKorisnik).IsInRole(OvlastiKorisnik.Moderator)))
+                {
+                    <td>
+                        @Html.ActionLink("Info", "Detalji", new { id = student.ID }, new { @class = "btn btn-info btn-sm" })
+                        @Html.ActionLink("Ažuriraj", "Azuriraj", new { id = student.ID }, new { @class = "btn btn-warning btn-sm" })
+                        @Html.ActionLink("Izbriši", "Brisi", new { id = student.ID }, new { @class = "btn btn-danger btn-sm" })
+                    </td>
+                }
+                </tr>
                 }
             }
             else
@@ -59,7 +68,7 @@
         </tbody>
     </table>
     <div id="pager">
-        Ukupno rezultata: @Model.TotalItemCount </br>
+        Ukupno rezultata: @Model.TotalItemCount <br />
 
         Stranica @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) od @Model.PageCount
 

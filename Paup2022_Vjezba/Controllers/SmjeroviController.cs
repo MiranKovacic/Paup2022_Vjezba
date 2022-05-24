@@ -10,11 +10,14 @@ using Paup2022_Vjezba.Models;
 
 namespace Paup2022_Vjezba.Controllers
 {
+    [Authorize(Roles = OvlastiKorisnik.Administrator + ", " + OvlastiKorisnik.Moderator)]
     public class SmjeroviController : Controller
     {
         private BazaDbContext db = new BazaDbContext();
 
         // GET: Smjerovi
+
+        [AllowAnonymous]
         public ActionResult Index()
         {
             return View(db.PopisSmjerova.ToList());

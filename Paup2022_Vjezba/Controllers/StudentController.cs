@@ -2,6 +2,7 @@
 using Paup2022_Vjezba.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -9,10 +10,13 @@ using System.Web.Mvc;
 
 namespace Paup2022_Vjezba.Controllers
 {
+    [Authorize]
     public class StudentController : Controller
     {
         BazaDbContext bazaPOdataka = new BazaDbContext();
         // GET: Student
+
+        [AllowAnonymous]
         public ActionResult Index()
         {
             ViewBag.Title = "Početna o studentima";
@@ -20,6 +24,8 @@ namespace Paup2022_Vjezba.Controllers
             return View();
         }
 
+
+        [AllowAnonymous]
         public ActionResult Popis(string naziv, string spol, string smjer)
         {
             var smjeroviList = bazaPOdataka.PopisSmjerova.OrderBy(x => x.Naziv).ToList();
@@ -27,6 +33,8 @@ namespace Paup2022_Vjezba.Controllers
             return View();
         }
 
+
+        [AllowAnonymous]
         public ActionResult PopisPartial(string naziv, string spol, string sort, string smjer, int? page)
         {
             ViewBag.Sortiranje = sort;
@@ -116,6 +124,22 @@ namespace Paup2022_Vjezba.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Azuriraj(Student s)
         {
+            if(s.ImageFile != null)
+            {
+                string fileName = Path.GetFileNameWithoutExtension(s.ImageFile.FileName);
+                string extension = Path.GetExtension(s.ImageFile.FileName);
+                if(extension == ".jepg" || extension == ".jpg" || extension == ".png")
+                {
+                    fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+                    s.SlikaPutanja = "~/Images/" + fileName;
+                    fileName = Path.Combine(Server.MapPath("~/Images/"), fileName);
+                    s.ImageFile.SaveAs(fileName);
+                }
+                else
+                {
+                    ModelState.AddModelError("SlikaPutanja", "Nepodržana extenzija");
+                }
+            }
             if (ModelState.IsValid)
             {
                 if (s.ID != 0)
